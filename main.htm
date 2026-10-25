@@ -1,0 +1,13 @@
+<!doctype html>
+<title>geo handler</title>
+<script>
+const u = new URLSearchParams(location.search).get('u');
+if (u) {
+  const m = u.match(/^geo:(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/i);
+  if (m) location.replace(`https://www.google.com/maps/search/?api=1&query=${m[1]},${m[2]}`);
+  else document.body.textContent = 'Could not parse: ' + u;
+} else {
+  navigator.registerProtocolHandler('geo', location.origin + location.pathname + '?u=%s');
+  document.body.textContent = 'Allow the handler in Chrome\'s address-bar prompt.';
+}
+</script>
